@@ -1,0 +1,16 @@
+image: nodejs:8
+
+cache:
+  paths:
+  - node_modules/
+
+pages:
+  stage: deploy
+  script:
+    - yarn install
+    - yarn build
+  artifacts:
+    paths:
+    - dist
+  only:
+  - master
