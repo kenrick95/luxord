@@ -1,6 +1,6 @@
 class Timer {
   public isActive: boolean = false;
-  private msLeft: number = 0;
+  public msLeft: number = 0;
   private timeoutId: null | number;
   private timeStarted: null | number;
   private endCallback: Function;
@@ -8,9 +8,6 @@ class Timer {
     this.endCallback = endCallback;
     this.timeoutId = null;
     this.timeStarted = null;
-  }
-  setMsLeft(msLeft: number) {
-    this.msLeft = msLeft;
   }
 
   start = () => {
@@ -24,9 +21,11 @@ class Timer {
       clearTimeout(this.timeoutId);
     }
     if (this.timeStarted) {
-      this.msLeft = this.timeStarted - Date.now();
-    } else {
-      this.msLeft = 0;
+      this.msLeft -= Date.now() - this.timeStarted;
+      if (this.msLeft < 0) {
+        this.msLeft = 0;
+        this.end();
+      }
     }
   }
   end = () => {

@@ -10,7 +10,7 @@ class Main {
   resizeHandler: ResizeHandler;
 
   constructor() {
-    this.switchTimer = new SwitchTimer(10 * 1000);
+    this.switchTimer = new SwitchTimer(1 * 1000);
 
     this.timerDoms = [
       this.createTimerDom('timer-1'),
@@ -28,7 +28,8 @@ class Main {
           domId: id,
           canvasContext: context,
           canvasWidth: el.width,
-          canvasHeight: el.height
+          canvasHeight: el.height,
+          onClick: this.switch.bind(this, id)
         });
       }
     }
@@ -37,11 +38,29 @@ class Main {
 
   start() {
     this.switchTimer.start();
+    this.handleResized();
     this.render();
   }
+
+  switch = (id: string) => {
+    const timerDomIndex = this.timerDoms.findIndex(
+      item => !!item && item.domId === id
+    );
+    if (this.switchTimer.activeTimerId === timerDomIndex) {
+      this.switchTimer.switch();
+    }
+    
+  }
+
   render = () => {
-    for (const timerDom of this.timerDoms) {
-      if (timerDom) {
+    for (let i = 0; i < 2; i++) {
+      const timerDom = this.timerDoms[i];
+      const timer = this.switchTimer.timers[i];
+      if (timerDom && timer) {
+        timerDom.setData({
+          isActive: timer.isActive,
+          msLeft: timer.msLeft
+        });
         timerDom.render();
       }
     }
@@ -57,6 +76,8 @@ class Main {
           if (parent) {
             el.width = parent.clientWidth;
             el.height = parent.clientHeight;
+            timerDom.canvasWidth = el.width;
+            timerDom.canvasHeight = el.height;
           }
         }
       }
