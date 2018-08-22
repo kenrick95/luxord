@@ -50,7 +50,7 @@ class TimerDom {
 
   setData = ({ msLeft, isActive }: Data) => {
     if (this.data.msLeft !== msLeft) {
-      console.log('msLeft changed:', this.domId, msLeft)
+      console.log('msLeft changed:', this.domId, msLeft);
       this.targetTimestamp = Date.now() + msLeft;
       this.tick();
     }
@@ -70,14 +70,27 @@ class TimerDom {
     }
   };
 
-  getText = () => {
-    return Math.max(this.tickingMsLeft, 0) + '';
+  private getText = () => {
+    const msLeft = Math.max(this.tickingMsLeft, 0);
+    const seconds = Math.floor(msLeft / 1000);
+    const minutes = Math.floor(seconds / 60);
+
+    return `${this.pad(minutes)}:${this.pad(seconds % 60)}.${Math.floor(
+      (msLeft % 1000) / 100
+    )}`;
+  };
+
+  private pad = (number: number) => {
+    if (number < 10) {
+      return '0' + number;
+    }
+    return number;
   };
 
   render() {
     this.canvasContext.save();
     this.canvasContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    this.canvasContext.font = '48px serif';
+    this.canvasContext.font = '13rem monospace';
     this.canvasContext.textAlign = 'center';
     this.canvasContext.textBaseline = 'middle';
     this.canvasContext.fillText(

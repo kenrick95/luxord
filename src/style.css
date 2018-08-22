@@ -13,3 +13,6 @@ body,
   background: grey;
 }
 
+#timer-1 {
+  transform: rotateZ(180deg);
+}

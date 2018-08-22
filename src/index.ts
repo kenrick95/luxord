@@ -4,13 +4,15 @@ import ResizeHandler from './resizeHandler';
 
 import './style.css';
 
+const TIMER_AMOUNT_IN_MS = 60 * 1000;
+
 class Main {
   switchTimer: SwitchTimer;
   timerDoms: (null | TimerDom)[];
   resizeHandler: ResizeHandler;
 
-  constructor() {
-    this.switchTimer = new SwitchTimer(1 * 1000);
+  constructor() { 
+    this.switchTimer = new SwitchTimer(TIMER_AMOUNT_IN_MS);
 
     this.timerDoms = [
       this.createTimerDom('timer-1'),
@@ -48,6 +50,7 @@ class Main {
     );
     if (this.switchTimer.activeTimerId === timerDomIndex) {
       this.switchTimer.switch();
+      this.render();
     }
     
   }

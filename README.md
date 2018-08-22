@@ -14,5 +14,5 @@ Initial version is basically a chess timer.
 TODO
 
 - [ ] Implement canvas
-- [ ] Implement device orientation API
+- [ ] ~~Implement device orientation API~~ quite complicated
 - [ ] Testing
