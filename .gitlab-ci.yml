@@ -9,8 +9,9 @@ pages:
   script:
     - yarn install
     - yarn build
+    - cp -r dist public
   artifacts:
     paths:
-    - dist
+    - public
   only:
   - master
