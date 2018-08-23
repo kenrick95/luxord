@@ -8,7 +8,7 @@ pages:
   stage: deploy
   script:
     - yarn install
-    - yarn build --out-dir ./public --public-url ./luxord
+    - yarn build --out-dir ./public --public-url ./
   artifacts:
     paths:
     - public
