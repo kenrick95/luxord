@@ -9,8 +9,6 @@ class TimerDom {
   public canvasWidth: number;
   public canvasHeight: number;
   private data: Data;
-  private tickingMsLeft: number;
-  private targetTimestamp: number;
   private onClick: Function;
 
   constructor({
@@ -35,8 +33,6 @@ class TimerDom {
       msLeft: 0,
       isActive: false
     };
-    this.tickingMsLeft = 0;
-    this.targetTimestamp = 0;
 
     const el = document.getElementById(domId);
     if (el) {
@@ -49,29 +45,14 @@ class TimerDom {
   };
 
   setData = ({ msLeft, isActive }: Data) => {
-    if (this.data.msLeft !== msLeft) {
-      console.log('msLeft changed:', this.domId, msLeft);
-      this.targetTimestamp = Date.now() + msLeft;
-      this.tick();
-    }
     this.data = {
       msLeft,
       isActive
     };
-    if (isActive) {
-      this.tick();
-    }
-  };
-
-  private tick = () => {
-    this.tickingMsLeft = this.targetTimestamp - Date.now();
-    if (this.tickingMsLeft > 0 && this.data.isActive) {
-      requestAnimationFrame(this.tick);
-    }
   };
 
   private getText = () => {
-    const msLeft = Math.max(this.tickingMsLeft, 0);
+    const msLeft = Math.max(this.data.msLeft, 0);
     const seconds = Math.floor(msLeft / 1000);
     const minutes = Math.floor(seconds / 60);
 
@@ -91,6 +72,7 @@ class TimerDom {
     this.canvasContext.save();
     this.canvasContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.canvasContext.font = '13rem monospace';
+    this.canvasContext.fillStyle = 'white';
     this.canvasContext.textAlign = 'center';
     this.canvasContext.textBaseline = 'middle';
     this.canvasContext.fillText(
