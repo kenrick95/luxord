@@ -4,7 +4,7 @@ import ResizeHandler from './resizeHandler';
 
 import './style.css';
 
-const TIMER_AMOUNT_IN_MS = 60 * 1000;
+const TIMER_AMOUNT_IN_MS = 10 * 60 * 1000;
 
 class Main {
   switchTimer: SwitchTimer;
