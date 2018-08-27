@@ -27,6 +27,7 @@ class SwitchTimer {
   };
   private endCallback = (timerId: number) => {
     console.log('Timer ended:', timerId);
+    alert(`Time's up for player ${timerId + 1}`)
     this.reset();
   };
 

@@ -5,6 +5,8 @@ body,
   height: 100vh;
   padding: 0;
   margin: 0;
+  counter-reset: timer-counter;
+  color: white;
 }
 
 .timer {
@@ -12,11 +14,17 @@ body,
   width: 100%;
   height: 50%;
   background: black;
+  position: relative;
+}
+.timer::before {
+  counter-increment: timer-counter;
+  content: "Player " counter(timer-counter);
+  position: absolute;
 }
 .timer + .timer {
-  border-top: .3rem solid white;
+  border-top: 0.3rem solid white;
 }
 
-#timer-1 {
+.timer:nth-child(1) {
   transform: rotateZ(180deg);
 }
