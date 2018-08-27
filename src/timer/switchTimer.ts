@@ -1,13 +1,13 @@
 import Timer from './timer';
 
-enum TIMER_ID {
+export enum TIMER_ID {
   ONE = 0,
   TWO = 1,
   NONE = 2
 }
 
 class SwitchTimer {
-  activeTimerId: TIMER_ID = TIMER_ID.ONE;
+  activeTimerId: TIMER_ID = TIMER_ID.NONE;
   timers: Timer[];
   private timerAmountInMs: number;
 
@@ -27,20 +27,25 @@ class SwitchTimer {
   };
   private endCallback = (timerId: number) => {
     console.log('Timer ended:', timerId);
-    this.activeTimerId = TIMER_ID.NONE;
+    this.reset();
   };
 
   reset = () => {
     for (const timer of this.timers) {
+      timer.reset();
       timer.msLeft = this.timerAmountInMs;
     }
+    this.activeTimerId = TIMER_ID.NONE;
   };
   start = () => {
     const inactiveTimerId = this.getInactiveTimerId();
-    if (inactiveTimerId === TIMER_ID.NONE || this.activeTimerId === TIMER_ID.NONE) {
+    if (inactiveTimerId === TIMER_ID.NONE) {
       return;
     }
     this.timers[inactiveTimerId].pause();
+    if (this.activeTimerId === TIMER_ID.NONE) {
+      return;
+    }
     this.timers[this.activeTimerId].start();
   };
   switch = () => {

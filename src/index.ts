@@ -1,4 +1,4 @@
-import SwitchTimer from './timer/switchTimer';
+import SwitchTimer, { TIMER_ID } from './timer/switchTimer';
 import TimerDom from './timerDom/timerDom';
 import ResizeHandler from './resizeHandler';
 
@@ -39,7 +39,6 @@ class Main {
   }
 
   start() {
-    this.switchTimer.start();
     this.handleResized();
     this.render();
   }
@@ -51,6 +50,10 @@ class Main {
     if (this.switchTimer.activeTimerId === timerDomIndex) {
       this.switchTimer.switch();
       this.render();
+    } else if (this.switchTimer.activeTimerId === TIMER_ID.NONE) {
+      this.switchTimer.reset();
+      this.switchTimer.activeTimerId = timerDomIndex;
+      this.switchTimer.start();
     }
     
   }

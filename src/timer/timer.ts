@@ -42,12 +42,17 @@ class Timer {
       }
     }
   };
-  end = () => {
+  reset = () => {
     this.isActive = false;
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
+    this.timeStarted = null;
+    this.timeoutId = null;
     this.msLeft = 0;
+  }
+  end = () => {
+    this.reset();
     this.endCallback();
   };
 }
