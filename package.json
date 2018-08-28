@@ -8,10 +8,42 @@
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html",
-    "prettier": "prettier --write \"src/**/*.?(ts|scss|css)\""
+    "prettier": "prettier --write \"src/**/*.?(ts|scss|css)\"",
+    "test": "jest",
+    "test:ci": "jest --coverage --ci"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.1",
+    "jest": "^23.5.0",
+    "jest-date-mock": "^1.0.3",
     "parcel-bundler": "^1.9.7",
+    "ts-jest": "^23.1.4",
     "typescript": "^3.0.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "jest-date-mock"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx,js,jsx}"
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "text-summary"
+    ]
   }
 }

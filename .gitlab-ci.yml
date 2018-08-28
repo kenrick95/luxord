@@ -4,6 +4,12 @@ cache:
   paths:
   - node_modules/
 
+test:
+  stage: test
+  script:
+    - yarn install
+    - yarn test:ci
+
 pages:
   stage: deploy
   script:
