@@ -1,4 +1,3 @@
-import { advanceBy, advanceTo, clear } from 'jest-date-mock';
 import SwitchTimer, { TIMER_ID } from './switchTimer';
 
 const alertSpy = jest
@@ -7,7 +6,17 @@ const alertSpy = jest
 
 let switchTimer: SwitchTimer;
 const timerAmount = 1000;
-const now = Date.now();
+
+const now = performance.now();
+const _realPerformanceNow = performance.now;
+
+function advanceTo(time: number) {
+  performance.now = jest.fn(() => time);
+}
+function clear() {
+  performance.now = _realPerformanceNow;
+}
+
 beforeEach(() => {
   jest.useFakeTimers();
   advanceTo(now);

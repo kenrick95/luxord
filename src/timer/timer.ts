@@ -11,7 +11,7 @@ class Timer {
   }
 
   get msLeft() {
-    const now = Date.now();
+    const now = performance.now();
     if (this.isActive) {
       this._msLeft = this.timeStarted
         ? Math.max(0, this._msLeft - (now - this.timeStarted))
@@ -26,7 +26,7 @@ class Timer {
 
   start = () => {
     this.isActive = true;
-    this.timeStarted = Date.now();
+    this.timeStarted = performance.now();
     this.timeoutId = setTimeout(this.end, this.msLeft);
   };
   pause = () => {
@@ -35,7 +35,7 @@ class Timer {
       clearTimeout(this.timeoutId);
     }
     if (this.timeStarted) {
-      this.msLeft -= Date.now() - this.timeStarted;
+      this.msLeft -= performance.now() - this.timeStarted;
       if (this.msLeft < 0) {
         this.msLeft = 0;
         this.end();
